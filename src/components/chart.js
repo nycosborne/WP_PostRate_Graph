@@ -51,29 +51,50 @@ class Chart extends Component {
       if (!postRate[i])
       postRate[i] = 0;
     }
-    console.log(postRate);
+    // console.log(postRate);
     return postRate;
   }
 
   postMost(date){
-    if (this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1] < 4) {
-      return(<h1>Post Most</h1>);
-    }else {
-      return(<h1>Post Enough</h1>);
-    }
-  }
 
+    console.log(this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]);
+    if (this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1] == 1) {
+          return(<h4>Only posted once in the last 30 days</h4>);
+      }else if (this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]>3) {
+        return(<h4>With {this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]} in the last 30 days
+          posts I've posted enough.</h4>);
+    }else {
+      return(<h4>With only {this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]} in the last 30 days
+        posts I need to post more.</h4>);
+    }
+  // console.log(this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]);
+    // if (this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1] == 1) {
+    //       return(<h1>Only posted once in the last </h1>);
+    //   }else if (this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]>3) {
+    //     return(<h1>posted enughf</h1>);
+    // }else {
+    //   return(<h1>post more</h1>);
+    // }
+
+  // return(<div>
+  //         <h1 className="graph-title">
+  //           Number of Posts in the last 30 days:
+  //           {this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]}
+  //           {console.log(this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1])}
+  //         </h1>
+  //       </div>
+  //     );
+}
 returnGraph(postsData){
     const date = postsData.map(i => i.date);
   return(
       <div key={date}>
-        <Sparklines height={20} width={40} data={this.convertDatePerMonth(date)}>
+        <h1 className='graph-title'></h1>
+          {this.postMost(date)}
+      <Sparklines height={20} width={40} data={this.convertDatePerMonth(date)}>
             <SparklinesLine color={'red'}/>
             <SparklinesReferenceLine type="avg" />
         </Sparklines>
-        <h1>Post Rate {this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]}</h1>
-        <h1>{this.convertDatePerMonth(date).length}</h1>
-        {this.postMost(date)}
       </div>
     );
   }
