@@ -56,15 +56,15 @@ class Chart extends Component {
   }
 
   postMost(date){
-
+    console.log(process.env.NODE_ENV);
     console.log(this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]);
     if (this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1] == 1) {
-          return(<h4>Only posted once in the last 30 days</h4>);
+          return(<h4 className='posts-this-month'>Only posted once in the last 30 days</h4>);
       }else if (this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]>3) {
-        return(<h4>With {this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]} in the last 30 days
+        return(<h4 className='posts-this-month'>With {this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]} in the last 30 days
           posts I've posted enough.</h4>);
     }else {
-      return(<h4>With only {this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]} in the last 30 days
+      return(<h4 className='posts-this-month'>With only {this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]} in the last 30 days
         posts I need to post more.</h4>);
     }
   // console.log(this.convertDatePerMonth(date)[this.convertDatePerMonth(date).length - 1]);
@@ -88,9 +88,11 @@ class Chart extends Component {
 returnGraph(postsData){
     const date = postsData.map(i => i.date);
   return(
-      <div key={date}>
-        <h1 className='graph-title'></h1>
+
+      <div className='post-rate-graph-box' key={date}>
+        <h1 className='graph-title'>Post Per Month</h1>
           {this.postMost(date)}
+      <div className='post-rate-graph'></div>
       <Sparklines height={20} width={40} data={this.convertDatePerMonth(date)}>
             <SparklinesLine color={'red'}/>
             <SparklinesReferenceLine type="avg" />
